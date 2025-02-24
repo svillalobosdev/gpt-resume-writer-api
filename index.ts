@@ -13,7 +13,7 @@ export const app: Express = express();
 export const prisma = new PrismaClient();
 
 app.use(morgan("dev"));
-app.use(cors({origin: "*"}));
+app.use(cors({origin: false}));
 app.use(
   express.json({
     limit: "100mb",
