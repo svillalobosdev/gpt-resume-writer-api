@@ -13,7 +13,12 @@ export const app: Express = express();
 export const prisma = new PrismaClient();
 
 app.use(morgan("dev"));
-app.use(cors({origin: 'https://cdl-resume-writer.vercel.app'}));
+app.use(cors({
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}));
 app.use(
   express.json({
     limit: "100mb",
