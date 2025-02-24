@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  email      String  @unique
+  password       String
+  role       String
+  permission Boolean
+  profiles   profiles[]
+  jobs       jobs[]
+}
+
+model profiles {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  dob           String
+  address       String
+  email         String  @unique
+  phone         String
+  linkedin      String
+  skills        String[]
+  educations    educations[]
+  experiences    experiences[]
+  certifications String[]
+  jobs          jobs[]
+  userId         String?  @db.ObjectId
+  user           users?    @relation(fields: [userId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model educations {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  location   String
+  start_date String
+  end_date   String
+  degree     String
+  subject    String
+  profile     profiles @relation(fields: [profile_id], references: [id])
+  profile_id String
+}
+
+model experiences {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  location    String
+  start_date  String
+  end_date    String
+  type        String
+  environment String
+  profile     profiles @relation(fields: [profile_id], references: [id])
+  profile_id String
+}
+
+model jobs {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  profile     profiles @relation(fields: [profile_id], references: [id])
+  profile_id   String
+  company_name String
+  resume      String
+  user_id      String   @db.ObjectId
+  user         users    @relation(fields: [user_id], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
