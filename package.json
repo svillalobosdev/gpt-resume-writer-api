@@ -7,7 +7,7 @@
     "start": "ts-node .",
     "dev": "ts-node-dev .",
     "generate": "npx prisma generate",
-    "postinstall": "yarn rebuild phantomjs-prebuilt && yarn install markdown-pdf"
+    "postinstall": "npm rebuild phantomjs-prebuilt && npm install markdown-pdf"
   },
   "dependencies": {
     "@prisma/client": "4.12.0",
