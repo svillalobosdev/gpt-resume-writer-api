@@ -162,7 +162,7 @@ resumeRouter.post(
         paperFormat: "A4", // Ensure consistent paper size
         paperBorder: "10mm", // Add margins for clean output
         remarkable: { html: true }, // Enable HTML rendering in Markdown
-        phantomPath: process.env.PHANTOMJS_PATH || "/app/node_modules/phantomjs-prebuilt/bin/phantomjs"
+        phantomPath: "../node_modules/phantomjs-prebuilt/bin/phantomjs"
       }).from.string(markdownContent).to(outputPath, async () => {
         try {
           const uploadResult = await cloudinary.uploader.upload(outputPath, {
