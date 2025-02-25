@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node .",
     "dev": "ts-node-dev .",
-    "generate": "npx prisma generate"
+    "generate": "npx prisma generate",
+    "postinstall": "npm rebuild phantomjs-prebuilt"
   },
   "dependencies": {
     "@prisma/client": "4.12.0",
