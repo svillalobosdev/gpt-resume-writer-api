@@ -2,6 +2,10 @@
   "name": "cdl-resume-writer-api",
   "version": "1.0.0",
   "license": "MIT",
+  "engines": {
+    "node": "20.11.1",
+    "npm": "10.2.4"
+  },
   "main": "index.ts",
   "scripts": {
     "start": "ts-node .",
