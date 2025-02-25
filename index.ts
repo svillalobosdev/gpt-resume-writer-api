@@ -15,7 +15,8 @@ export const prisma = new PrismaClient();
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "https://cdl-resume-writer.vercel.app"
+    origin: "https://cdl-resume-writer.vercel.app",
+    credentials: true,
   })
 );
 app.use(
