@@ -7,6 +7,8 @@ import { openai } from "../utils/openai";
 import { cloudinary } from "../utils/cloudinary";
 import path from "path";
 
+process.env.PHANTOMJS_PATH = "/app/vendor/phantomjs/bin/phantomjs";
+
 const resumeRouter = Router();
 
 resumeRouter.post(
