@@ -7,7 +7,7 @@
     "start": "ts-node .",
     "dev": "ts-node-dev .",
     "generate": "npx prisma generate",
-    "postinstall": "npm install --force && npm install markdown-pdf && npm install phantomjs-prebuilt@2.1.13 --ignore-scripts"
+    "postinstall": "npm install phantomjs-prebuilt@2.1.13 --ignore-scripts"
   },
   "dependencies": {
     "@prisma/client": "4.12.0",
