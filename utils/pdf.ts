@@ -4,8 +4,14 @@ import { Remarkable } from "remarkable"
 
 export async function generatePdf(markdownContent, cssPath, outputPath) {
   const browser = await puppeteer.launch({
-    executablePath: process.env.CHROME_BIN || "/app/.apt/usr/bin/google-chrome-stable",
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    executablePath: process.env.CHROME_BIN || "/app/.cache/puppeteer/chrome-linux64/chrome",
+    args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--headless',
+        '--disable-gpu',
+        '--disable-dev-shm-usage'
+    ]
   });
   const page = await browser.newPage();
 
