@@ -1,9 +1,12 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import fs from "fs";
 import { Remarkable } from "remarkable"
 
 export async function generatePdf(markdownContent, cssPath, outputPath) {
-  const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+  const browser = await puppeteer.launch({
+    executablePath: process.env.CHROME_BIN || "/app/.apt/usr/bin/google-chrome-stable",
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
   const page = await browser.newPage();
 
   // Convert Markdown to HTML
