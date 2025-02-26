@@ -4,13 +4,13 @@ import { Remarkable } from "remarkable"
 
 export async function generatePdf(markdownContent, cssPath, outputPath) {
   const browser = await puppeteer.launch({
-    executablePath: process.env.CHROME_BIN || "/app/.cache/puppeteer/chrome-linux64/chrome",
+    executablePath: process.env.CHROME_BIN || "/usr/bin/chromium-browser", // Correct path for Heroku-installed Chromium
     args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
-        '--headless',
         '--disable-gpu',
-        '--disable-dev-shm-usage'
+        '--disable-dev-shm-usage',
+        '--headless'
     ]
   });
   const page = await browser.newPage();
