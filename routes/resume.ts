@@ -1,11 +1,13 @@
 import { Router } from "express";
 import markdownpdf  from "markdown-pdf";
+import puppeteer from "puppeteer";
 import fs from "fs";
 import { prisma } from "..";
 import { authenticate } from "../middlewares/authenticate";
 import { openai } from "../utils/openai";
 import { cloudinary } from "../utils/cloudinary";
 import path from "path";
+import { generatePdf } from "../utils/pdf";
 
 process.env.PHANTOMJS_PATH = "/app/vendor/phantomjs/bin/phantomjs";
 
@@ -157,53 +159,42 @@ resumeRouter.post(
       const cssPath = path.join(__dirname, "../styles/pdf-style.css");
       const outputPath = path.join(__dirname, `../uploads/${resumeTitle}`);
 
-      markdownpdf({
-        cssPath, // Apply custom CSS
-        paperFormat: "A4", // Ensure consistent paper size
-        paperBorder: "10mm", // Add margins for clean output
-        remarkable: { html: true }, // Enable HTML rendering in Markdown
-        phantomPath: "../node_modules/phantomjs-prebuilt/bin/phantomjs"
-      }).from.string(markdownContent).to(outputPath, async () => {
-        try {
-          const uploadResult = await cloudinary.uploader.upload(outputPath, {
-              resource_type: "image",
-              folder: "resumes",
-          });
-
-          fs.unlinkSync(outputPath);
-
-          const downloadUrl = uploadResult.secure_url.replace(
-            "/upload/",
-            "/upload/fl_attachment/"
-          );
-
-          await prisma.jobs.create({
-            data: {
-              title: job_title,
-              description: job_description,
-              profile_id: profileId,
-              company_name: company_name,
-              resume: downloadUrl,
-              user_id: user.id || ""
-            }
-          });
-
-          return res.status(200).send({
-            success: true,
-            message: "Resume generated successfully",
-            data: {
-              content: markdownContent,
-              resumeTitle: resumeTitle,
-              pdfUrl: downloadUrl,
-            },
-          });
-        } catch (error) {
-          console.error("Error uploading PDF to Cloudinary:", error);
-          res.status(500).json({ message: "Failed to upload PDF to Cloudinary." });
-        }
-
-      })
+      // Generate PDF
+      await generatePdf(markdownContent, cssPath, outputPath);
       
+      const uploadResult = await cloudinary.uploader.upload(outputPath, {
+          resource_type: "raw",
+          folder: "resumes",
+      });
+
+      fs.unlinkSync(outputPath);
+
+      const downloadUrl = uploadResult.secure_url.replace(
+        "/upload/",
+        "/upload/fl_attachment/"
+      );
+
+      await prisma.jobs.create({
+        data: {
+          title: job_title,
+          description: job_description,
+          profile_id: profileId,
+          company_name: company_name,
+          resume: downloadUrl,
+          user_id: user.id || ""
+        }
+      });
+
+      return res.status(200).send({
+        success: true,
+        message: "Resume generated successfully",
+        data: {
+          content: markdownContent,
+          resumeTitle: resumeTitle,
+          pdfUrl: downloadUrl,
+        },
+      });
+
     } catch (error) {
       console.log(error);
 
