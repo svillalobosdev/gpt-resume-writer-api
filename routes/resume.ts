@@ -1,6 +1,4 @@
 import { Router } from "express";
-import markdownpdf  from "markdown-pdf";
-import puppeteer from "puppeteer";
 import fs from "fs";
 import { prisma } from "..";
 import { authenticate } from "../middlewares/authenticate";
