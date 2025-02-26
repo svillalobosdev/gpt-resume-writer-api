@@ -10,8 +10,7 @@
   "scripts": {
     "start": "ts-node .",
     "dev": "ts-node-dev .",
-    "generate": "npx prisma generate",
-    "postinstall": "npm install phantomjs-prebuilt@2.1.13 --ignore-scripts && npm set strict-ssl false"
+    "generate": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "4.12.0",
