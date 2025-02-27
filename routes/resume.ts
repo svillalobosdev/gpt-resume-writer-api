@@ -155,7 +155,7 @@ resumeRouter.post(
       const markdownContent  = gptResponse.choices[0]?.message.content || "";
       const resumeTitle = `resume${Date.now()}.pdf`;
       const cssPath = path.join(__dirname, "../styles/pdf-style.css");
-      const outputPath = path.join(__dirname, `../uploads/${resumeTitle}`);
+      const outputPath = path.join("/tmp", resumeTitle);
 
       // Generate PDF
       await generatePdf(markdownContent, cssPath, outputPath);
