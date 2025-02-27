@@ -154,11 +154,10 @@ resumeRouter.post(
 
       const markdownContent  = gptResponse.choices[0]?.message.content || "";
       const resumeTitle = `resume${Date.now()}.pdf`;
-      const cssPath = path.join(__dirname, "../styles/pdf-style.css");
       const outputPath = path.join("/tmp", resumeTitle);
 
       // Generate PDF
-      await generatePdf(markdownContent, cssPath, outputPath);
+      await generatePdf(markdownContent, outputPath);
       
       const uploadResult = await cloudinary.uploader.upload(outputPath, {
           resource_type: "raw",
