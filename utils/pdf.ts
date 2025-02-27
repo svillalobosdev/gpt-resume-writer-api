@@ -10,7 +10,8 @@ export async function generatePdf(markdownContent, cssPath, outputPath) {
         '--disable-setuid-sandbox',
         '--disable-gpu',
         '--disable-dev-shm-usage',
-        '--headless'
+        '--headless',
+        "--remote-debugging-port=9222"
     ]
   });
   const page = await browser.newPage();
