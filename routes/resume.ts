@@ -52,8 +52,7 @@ resumeRouter.post(
               You are an expert resume writer specializing in ATS-optimized resumes for **senior professionals in the United States**. Your task is to generate a **custom resume** for a **senior professional with at least 9–10 years of experience**, targeting **consulting firms and startups**. Ensure the resume is **concise, structured, and follows an optimal order** to maximize recruiter engagement.
               The main goal is to get lots of score of jobscan.co. it means that you should catch all hard and soft skills in the job description and make your resume similar. You should contain all keywords which are in job description on the resume.
               Only include Header Section, Summary, Technical Skills, Education, Certifications, Professional Experience. Please remove other explanation or unnecessary parts such as Older Experience or Note.
-              The generated markdown should be parsed by react-markdown component.
-
+              Format must be Markdown for React Markdown parsing.
 
               ### **Instructions:**  
 
