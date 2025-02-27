@@ -154,7 +154,7 @@ resumeRouter.post(
         ],
       });
 
-      const markdownContent  = gptResponse.choices[0]?.message.content || "";
+      const markdownContent  = gptResponse.choices[0]?.message.content?.trim() || "";
       const resumeTitle = `resume${Date.now()}.pdf`;
       const outputPath = path.join("/tmp", resumeTitle);
 
